@@ -55,7 +55,140 @@ def zig_zag(arr):
     return arr
 
 
+#Count pairs with given sum
+
+def pair_sum(arr,sum):
+    diff_map ={}
+    count = 0
+    for x in arr:
+        if sum - x in diff_map:
+            diff_map[sum - x] = diff_map[sum - x] + 1
+        else:
+            diff_map[sum - x] = 1
+
+    for x in arr:
+            count += diff_map[x]
+
+    return count /2
 
 
-arr=[3,4,6,2,1,8,9]
-print(zig_zag(arr))
+
+#sort array in wave form
+
+def wave_arr(arr):
+
+    for i in range(0,len(arr)-1):
+        if i % 2 ==0:
+            if arr[i]<arr[i+1]:
+                arr[i],arr[i+1]=arr[i+1],arr[i]
+        if i % 2 ==1:
+            if arr[i]>arr[i+1]:
+                arr[i],arr[i+1]=arr[i+1],arr[i]
+
+    return arr
+
+
+#intersection of sorted arrs
+
+def intersect_arrs(arr1,arr2):
+    len1=len(arr1)
+    len2=len(arr2)
+    intersect = []
+    i=0
+    j=0
+
+    while i<len1 and j<len2:
+        if arr1[i]<arr2[j]:
+            i+=1
+        if arr1[i]>arr2[j]:
+            j+=1
+        else:
+            intersect.append(arr1[i])
+            i+=1
+            j+=1
+    return set(intersect)
+
+
+#majority element in array
+
+def majority_element(arr):
+    maj_candidate=arr[0]
+    counter = 1
+    for i in range(1,len(arr)):
+        if arr[i]==maj_candidate:
+            counter+=1
+        else:
+            counter-=1
+        if counter == 0:
+                maj_candidate =arr[i]
+                counter =1
+
+    if is_majority(arr,maj_candidate):
+        return maj_candidate
+
+    return None
+
+def is_majority(arr, cand):
+    count = 0
+    for i in range(len(arr)):
+        if arr[i] == cand:
+            count += 1
+    if count > len(arr)/2:
+        return True
+    else:
+        return False
+
+
+
+#find min distance
+
+def find_min_distance(arr,x,y):
+    min_dist = 10000000000000000000
+    previous_number= x
+    previous_index=0
+    dist = 0
+    for i in range(0,len(arr)):
+        if (arr[i] == x or arr[i] == y) and arr[i] != previous_number:
+            dist=i - previous_index
+            if dist<min_dist:
+                min_dist=dist
+            previous_number = arr[i]
+            previous_index = i
+
+
+    return min_dist
+
+
+
+#Find subarray with given sum
+
+def sub_sum(arr,desired_sum):
+    sub_sum = 0
+    start_index = 0
+    for i in range(0, len(arr)):
+        sub_sum = sub_sum + arr[i]
+
+        if sub_sum == desired_sum:
+            print(f'{start_index} to {i}')
+            sub_sum = 0
+            start_index = i
+
+        if sub_sum > desired_sum:
+            sub_sum = sub_sum - arr[start_index]
+            start_index += 1
+
+
+
+
+
+
+
+
+
+
+
+
+arr1 = [ 4, 0 , 3, 10, 5]
+
+
+print("Count of pairs is", sub_sum(arr1,7))
