@@ -1,5 +1,7 @@
 #Remove duplicates from sorted array Constant extra space
 
+NO_OF_CHARS =256
+
 def remove_duplicates_constant(arr):
     j = 0
     for i in range(0,len(arr)-1):
@@ -180,15 +182,85 @@ def sub_sum(arr,desired_sum):
 
 
 
+#Adding one to number represented as array of digits
+
+def add_one(arr):
+    arr_len =len(arr)-1
+    carry = 0
+    arr[arr_len]=arr[arr_len]+1
+    if arr[arr_len]==10:
+        arr[arr_len] = 0
+        carry =1
+
+
+    for i in range(arr_len-1,-1,-1):
+            if carry ==1:
+                arr[i] += 1
+                if arr[i] == 10:
+                    arr[i] = 0
+                    if i == 0:
+                        arr.insert(0, 1)
+
+    return arr
+
+
+def anagrams(arr1,arr2):
+    if len(arr1)!=len(arr2):
+        return False
+    arr1_tmp= [0] * NO_OF_CHARS
+    arr2_tmp = [0] * NO_OF_CHARS
+
+    for x in arr1:
+        m = ord(x)
+        arr1_tmp[m] = 1
+
+    for x in arr2:
+        m = ord(x)
+        arr2_tmp[m] = 1
+
+    for i in range(0,NO_OF_CHARS):
+        if arr1_tmp[i] != arr2_tmp[i]:
+            return 0
+
+
+
+def max_diff(arr):
+    min_num = 100000000000
+    diff = 0
+
+    for i in range(0,len(arr)-1):
+        if arr[i] < min_num :
+            min_num = arr[i]
+        curr_diff = arr[i]-min_num
+        if curr_diff > diff:
+            diff = curr_diff
+
+    return diff
+
+
+def subbaray_sum(arr,sum_desired):
+    cur_sum = 0
+    left = 0
+    for i in range(0, len(arr)):
+        cur_sum = cur_sum + arr[i]
+
+        if cur_sum > sum_desired:
+            while cur_sum > sum_desired:
+                cur_sum  = cur_sum - arr[left]
+                left += 1
+
+        if cur_sum == sum_desired:
+            print(f"index {left-1} to {i} ")
+            return True
+
+arr =[1, 4, 20, 3, 10, 5]
+sum = 33
 
 
 
 
 
+arr1 = [1, 4, 20, 3, 10, 5]
 
 
-
-arr1 = [ 4, 0 , 3, 10, 5]
-
-
-print("Count of pairs is", sub_sum(arr1,7))
+print("Count of pairs is", subbaray_sum(arr1,33))
