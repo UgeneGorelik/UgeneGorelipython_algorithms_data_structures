@@ -1,6 +1,6 @@
-from linked_list import Node,LinkedList
 
-class TreeNode:
+
+class Node:
     def __init__(self, data, left=None, right=None ):
         self.left = left
         self.right = right
@@ -8,7 +8,7 @@ class TreeNode:
 
 
 
-def tree_in_order_to_list(root,head : LinkedList):
+def tree_in_order_to_list(root,head ):
     if not root:
         return head
 
@@ -19,37 +19,59 @@ def tree_in_order_to_list(root,head : LinkedList):
     return head
 
 
-def merge_sortedlists(head1, head2):
-    new_list_node = Node(0)   
-    tail = new_list_node
-    while True:
-
-        if head1 is None:
-            tail.next = head2
-            break
-        if head2 is None:
-            tail.next = head1
-            break
-
-        if head1.data <= head2.data:
-            tail.next = head1
-            head1 = head1.next
-        else:
-            tail.next = head2
-            head2 = head2.next
-        tail = tail.next
-
-  
-    return new_list_node.next
 
 
-a = TreeNode(20)
-a.left = TreeNode(10)
-a.right = TreeNode(30)
-a.right.left = TreeNode(25)
-a.right.right = TreeNode(100)
+def height(node :Node):
+    if not node:
+        return 0
+    return (1+max(height(node.left),height(node.right)))
 
-l = LinkedList()
+def diameter(root: Node):
+    if not root:
+        return 0
+    h_left = height(root.left)
+    h_right = height(root.right)
 
-x=tree_in_order_to_list(a,l)
-print(1)
+    d1 = diameter(root.left)
+    d2 = diameter(root.right)
+
+    return max(1+h_left+h_right ,max(d1,d2) )
+
+
+def find_lca(root,l,r):
+
+    if not root:
+        return None
+
+    if root.data == l or root.data == r:
+        return root
+
+    left_lca = find_lca(root.left,l,r)
+    right_lca = find_lca(root.right, l, r)
+
+    if left_lca and right_lca:
+        return root
+
+    if left_lca:
+        result = left_lca
+
+    if right_lca:
+        result =right_lca
+
+
+    return result
+
+
+
+
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+root.right.left = Node(6)
+root.right.right = Node(7)
+print ("LCA(4,5) = ", find_lca(root, 4, 5).data)
+print ("LCA(4,6) = ", find_lca(root, 4, 6).data)
+print ("LCA(3,4) = ", find_lca(root, 3, 4).data)
+print ("LCA(2,4) = ", find_lca(root, 2, 4).data)

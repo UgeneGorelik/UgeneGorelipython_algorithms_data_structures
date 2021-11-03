@@ -21,6 +21,13 @@ class LinkedList:
             current = current.next
         return current
 
+    def print_list(self):
+        curr = self.head
+
+        while curr:
+            print(curr.data)
+            curr =curr.next
+
     def insert_at_end(self,data):
         node = Node(data)
         if not self.head:
@@ -34,6 +41,22 @@ class LinkedList:
         node.next =insert_after.next
         insert_after.next  = node
 
+    def reverse(self):
+        curr = self.head
+        prev = None
+        tmp = None
+        while curr:
+            tmp = Node(curr.data,curr.next)
+            curr.next = prev
+            prev = curr
+            curr = tmp.next
+
+
+
+
+        self.head = prev
+
+        return self.head
 
 # Nth-to-last Linked List Element
 def nth_last(linked_list,n):
@@ -50,10 +73,35 @@ def nth_last(linked_list,n):
     print(pointer2.data)
 
 
-llist = LinkedList()
-llist.insert_at_start(20)
-llist.insert_at_start(4)
-llist.insert_at_start(15)
-llist.insert_at_start(35)
+#merge sorted lists
+def merge_sortedlists(head1, head2):
+    new_list_node = Node(0)
+    tail = new_list_node
+    while True:
 
-nth_last(llist,2)
+        if head1 is None:
+            tail.next = head2
+            break
+        if head2 is None:
+            tail.next = head1
+            break
+
+        if head1.data <= head2.data:
+            tail.next = head1
+            head1 = head1.next
+        else:
+            tail.next = head2
+            head2 = head2.next
+        tail = tail.next
+
+    return new_list_node.next
+
+llist = LinkedList()
+llist.insert_at_end(20)
+llist.insert_at_end(4)
+llist.insert_at_end(15)
+llist.insert_at_end(35)
+
+llist.reverse()
+llist.print_list()
+
