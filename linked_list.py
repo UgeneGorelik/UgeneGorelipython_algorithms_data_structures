@@ -96,12 +96,49 @@ def merge_sortedlists(head1, head2):
 
     return new_list_node.next
 
-llist = LinkedList()
-llist.insert_at_end(20)
-llist.insert_at_end(4)
-llist.insert_at_end(15)
-llist.insert_at_end(35)
+#Rearrange a linked list such that all even and odd positioned nodes are together
+def rearange_odd_even(ll):
 
-llist.reverse()
-llist.print_list()
 
+
+    ptr_odd = LinkedList()
+    ptr_even = LinkedList()
+
+    runner = ll.head
+    counter = 1
+    odd_last = None
+    while runner:
+
+        data = runner.data
+        next = runner.next
+        new_node = Node(data)
+        if counter % 2 == 1:
+                ptr_odd.insert_at_end(new_node)
+                odd_last = new_node
+        else:
+            ptr_even.insert_at_end(new_node)
+        runner =next
+        counter += 1
+
+    current=ptr_odd.head
+    while current.next:
+        current = current.next
+    current.next  =ptr_even.head
+
+    return ptr_odd
+
+
+# Driver code
+ll = LinkedList()
+ll.insert_at_start(5)
+ll.insert_at_start(4)
+ll.insert_at_start(3)
+ll.insert_at_start(2)
+ll.insert_at_start(1)
+print("Given Linked List")
+ll.print_list()
+
+start = rearange_odd_even(ll)
+
+# print("\nModified Linked List")
+start.print_list()

@@ -62,6 +62,22 @@ def find_lca(root,l,r):
     return result
 
 
+def root_to_leaf_sum(root: Node,subsum):
+
+    subsum =subsum - root.data
+
+    if root.left == None and   root.righ == None and subsum ==0:
+        return True
+
+    if root.left:
+        result = root_to_leaf_sum(root.left)
+    if root.right:
+        result = root_to_leaf_sum(root.right)
+
+    return result
+
+
+
 
 
 root = Node(1)
